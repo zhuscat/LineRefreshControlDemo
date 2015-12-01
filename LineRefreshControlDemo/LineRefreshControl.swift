@@ -117,6 +117,15 @@ class LineRefreshControl: AnimatedLineView {
         else {
             if -(scrollView.contentOffset.y) < triggerHeight{
                 //print("has not trigger")
+                if state != .Normal {
+                    topLine.transform = CATransform3DIdentity
+                    middleLine.transform = CATransform3DIdentity
+                    bottomLine.transform = CATransform3DIdentity
+                    middleLine.position = CGPoint(x: center.x, y: bounds.size.height - 30)
+                    bottomLine.position = CGPoint(x: center.x, y: middleLine.position.y + 10)
+                    topLine.position = CGPoint(x: center.x, y: middleLine.position.y - 10)
+                }
+                
                 setState(.Normal)
             }
             else if -(scrollView.contentOffset.y) < triggerHeight + 80 {
@@ -186,7 +195,9 @@ class LineRefreshControl: AnimatedLineView {
         }
         else {
             print("endDrag")
-            stopAnimation()
+            if isAnimating {
+                stopAnimation()
+            }
         }
     }
     
